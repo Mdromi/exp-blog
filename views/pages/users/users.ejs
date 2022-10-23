@@ -1,0 +1,91 @@
+<%- include('../../partials/head.ejs') %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.css">
+
+<div class="container-fluid">
+
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card card-body my-5">
+                        <div class="mt-1" id="comment-holder">
+                            <% if (profile.length === 0) { %>
+                            <p class="text-muted text-center">There is No Users</p>
+                            <% } else { %>
+                            <h5>All Users</h5>
+                            <% for (let user of profile.reverse()) { %>
+                            <div class="user-information">
+                                <div class="media border d-flex justify-content-between px-3">
+                                    <div class="user-details d-flex">
+                                        <a href="/author/<%= user.profile.user._id %>" style="color: #222;">
+                                            <img src="<%= user.profilePics %>" class="rounded-circle mx-3 my-3"
+                                                style="width: 80px;">
+                                        </a>
+                                        <div class="media-body my-3"> 
+                                            <p>Name: <strong>
+                                                <a href="/author/<%= user.profile.user._id %>" style="color: #222;"><%= user.profile.name %></a>
+                                            </strong></p>
+                                            <p>Tile: <strong> <%= user.profile.title %> </strong></p>
+                                            <p>Bio: <%= user.profile.bio %> </p>
+                                            <p>Posts: <%= user.profile.posts.length %> </p>
+                                            <p>Flowers: <%= user.profile.flowing.length %> </p>
+    
+                                            <div>
+                                                Social Links: 
+                                                <% if (user.profile.links.website) { %>
+                                                    <span>
+                                                        <a href="<%= user.profile.links.website %>" target="_blank">
+                                                            <i class="fab fa-internet-explorer"></i>
+                                                        </a>
+                                                    </span>
+                                                <% } %>
+                                                <% if (user.profile.links.facebook) { %>
+                                                    <span>
+                                                        <a href="<%= user.profile.links.facebook %>" target="_blank">
+                                                            <i class="fab fa-facebook-square"></i>
+                                                        </a>
+                                                    </span>
+                                                <% } %>
+                                                <% if (user.profile.links.twitter) { %>
+                                                    <span>
+                                                        <a href="<%= user.profile.links.twitter %>" target="_blank">
+                                                            <i class="fab fa-twitter-square"></i>
+                                                        </a>
+                                                    </span>
+                                                <% } %>
+                                                <% if (user.profile.links.github) { %>
+                                                    <span>
+                                                        <a href="<%= user.profile.links.github %>" target="_blank">
+                                                            <i class="fab fa-github-square"></i>
+                                                        </a>
+                                                    </span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flowaing-information">
+                                        <% if(userId && (userId != user._id)) {%>
+                                            <div class="user-flowing py-2">
+                                                <button class="btn btn-danger btn-sm flow" id="flow" data-profile="<%= user.profile._id %>">
+                                                    <%= user.profile.flowing.includes(userId) ? 'flowing' : 'Flow' %> 
+                                            </button>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/scripts/flowUnflow.js"></script>
+<%- include('../../partials/footer.ejs') %>
+</body>
+
+</html>
